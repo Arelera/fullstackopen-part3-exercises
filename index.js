@@ -37,7 +37,7 @@ let persons = [
   {
     id: 3,
     name: 'Jay',
-    number: '',
+    number: '555-111-2222',
   },
 ];
 
@@ -83,9 +83,10 @@ app.post('/api/persons', (req, res) => {
 });
 
 app.put('/api/persons/:id', (req, res) => {
-  const id = req.params.id;
+  const id = Number(req.params.id);
+  const newPerson = { id, ...req.body };
 
-  persons = persons.filter((person) => person.id !== id);
+  persons = persons.map((person) => (person.id !== id ? person : newPerson));
   res.send();
 });
 
