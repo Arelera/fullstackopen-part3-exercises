@@ -6,6 +6,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+// adds the frontend aswell somehow, checks build files index file. kinca crazy
+app.use(express.static('build'));
 app.use(
   morgan(function (tokens, req, res) {
     return [
@@ -78,6 +80,12 @@ app.post('/api/persons', (req, res) => {
   const person = { ...req.body, id: maxId + 1 };
   persons.push(person);
   res.send();
+});
+
+app.put('/api/persons/:id', (req, res) => {
+  const id = req.params.id;
+
+  persons = persons.filter((person) => person.id !== id);
 });
 
 const PORT = process.env.PORT || 3001;
